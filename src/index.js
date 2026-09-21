@@ -440,7 +440,7 @@ function renderDashboard(cards, gateways) {
                 <form id="cardForm">
                     <div class="form-group">
                         <label>شماره کارت (بلو)</label>
-                        <input type="text" name="card_number" placeholder="6104-XXXX-XXXX-XXXX" required>
+                        <input type="text" name="card_number" placeholder="XXXX-XXXX-XXXX-XXXX" required>
                     </div>
                     <div class="form-group">
                         <label>نام و نام خانوادگی صاحب کارت</label>
