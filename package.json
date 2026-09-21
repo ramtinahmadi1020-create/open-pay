@@ -10,7 +10,7 @@
     "start": "wrangler dev"
   },
   "devDependencies": {
-    "wrangler": "^3.0.0"
+    "wrangler": "^4.0.0"
   },
   "dependencies": {
     "@cloudflare/puppeteer": "^0.0.14"
