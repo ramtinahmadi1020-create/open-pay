@@ -504,64 +504,63 @@ function renderDashboard(cards, gateways) {
     </div>
     <div id="toast" class="toast"></div>
     <script>
-        const toast = (msg) => {
-            const el = document.getElementById('toast');
-            el.textContent = msg;
-            el.classList.add('show');
-            setTimeout(() => el.classList.remove('show'), 3000);
+    const toast = (msg) => {
+        const el = document.getElementById('toast');
+        el.textContent = msg;
+        el.classList.add('show');
+        setTimeout(() => el.classList.remove('show'), 3000);
+    };
+
+    document.getElementById('cardForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+            card_number: form.card_number.value,
+            holder_name: form.holder_name.value
         };
-
-        document.getElementById('cardForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const data = {
-                card_number: form.card_number.value,
-                holder_name: form.holder_name.value
-            };
-            const res = await fetch('/admin/cards', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            const result = await res.json();
-            if (result.success) {
-                toast('کارت با موفقیت اضافه شد');
-                setTimeout(() => location.reload(), 1000);
-            } else {
-                toast(result.error || 'خطا در افزودن کارت');
-            }
+        const res = await fetch('/admin/cards', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
         });
+        const result = await res.json();
+        if (result.success) {
+            toast('کارت با موفقیت اضافه شد');
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            toast(result.error || 'خطا در افزودن کارت');
+        }
+    });
 
-        document.getElementById('gatewayForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const data = {
-                card_id: form.card_id.value,
-                title: form.title.value,
-                amount: parseInt(form.amount.value),
-                expires_in_minutes: parseInt(form.expires_in_minutes.value),
-                redirect_url: form.redirect_url.value || null
-            };
-            const res = await fetch('/admin/gateways', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            const result = await res.json();
-            if (result.success) {
-                const link = `${window.location.origin}/p/${result.gatewayId}`;
-                document.getElementById('gatewayResult').innerHTML = `
-                    <div style="background: #f0fdf4; padding: 1rem; border-radius: 8px; border: 1px solid #bbf7d0;">
-                        <p style="font-weight: 600; margin-bottom: 0.5rem;">لینک پرداخت ساخته شد:</p>
-                        <code style="word-break: break-all; font-size: 0.8rem; display: block; padding: 0.5rem; background: #fff; border-radius: 4px;">${link}</code>
-                    </div>
-                `;
-                toast('لینک پرداخت با موفقیت ساخته شد');
-            } else {
-                toast(result.error || 'خطا در ساخت لینک');
-            }
+    document.getElementById('gatewayForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+            card_id: form.card_id.value,
+            title: form.title.value,
+            amount: parseInt(form.amount.value),
+            expires_in_minutes: parseInt(form.expires_in_minutes.value),
+            redirect_url: form.redirect_url.value || null
+        };
+        const res = await fetch('/admin/gateways', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
         });
-    </script>
+        const result = await res.json();
+        if (result.success) {
+            const link = window.location.origin + '/p/' + result.gatewayId;
+            document.getElementById('gatewayResult').innerHTML =
+                '<div style="background: #f0fdf4; padding: 1rem; border-radius: 8px; border: 1px solid #bbf7d0;">' +
+                '<p style="font-weight: 600; margin-bottom: 0.5rem;">لینک پرداخت ساخته شد:</p>' +
+                '<code style="word-break: break-all; font-size: 0.8rem; display: block; padding: 0.5rem; background: #fff; border-radius: 4px;">' + link + '</code>' +
+                '</div>';
+            toast('لینک پرداخت با موفقیت ساخته شد');
+        } else {
+            toast(result.error || 'خطا در ساخت لینک');
+        }
+    });
+</script>
 </body>
 </html>`;
 }
@@ -621,19 +620,19 @@ function renderPaymentPage(gateway) {
         </div>
     </div>
     <script>
-        let minutes = ${expiryMinutes};
-        const timerEl = document.getElementById('timer');
-        setInterval(() => {
-            minutes--;
-            if (minutes <= 0) {
-                timerEl.textContent = '0';
-                alert('زمان پرداخت به پایان رسیده است.');
-                location.reload();
-            } else {
-                timerEl.textContent = minutes;
-            }
-        }, 60000);
-    </script>
+    let minutes = ${expiryMinutes};
+    const timerEl = document.getElementById('timer');
+    setInterval(function() {
+        minutes--;
+        if (minutes <= 0) {
+            timerEl.textContent = '0';
+            alert('زمان پرداخت به پایان رسیده است.');
+            location.reload();
+        } else {
+            timerEl.textContent = minutes;
+        }
+    }, 60000);
+</script>
 </body>
 </html>`;
 }
