@@ -1,0 +1,48 @@
+{
+  "name": "open-pay",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "vars": {
+    "ADMIN_PASSWORD": "change-me-in-dashboard",
+    "BLU_USERNAME": "your-blu-username",
+    "TELEGRAM_BOT_TOKEN": "your-telegram-token",
+    "TELEGRAM_CHAT_ID": "your-telegram-chat-id"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "PAYMENT_TOKENS",
+      "id": "YOUR_KV_NAMESPACE_ID"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "open-pay-db",
+      "database_id": "YOUR_D1_DATABASE_ID"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "BROWSER_SESSION",
+        "class_name": "BrowserSession"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "BrowserSession"
+      ]
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "*/10 * * * *"
+    ]
+  }
+}
