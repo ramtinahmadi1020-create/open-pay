@@ -1,0 +1,13 @@
+# رمز عبور پنل ادمین
+ADMIN_PASSWORD=your-secure-password-here
+
+# اطلاعات لاگین بلو بانک
+BLU_USERNAME=your-blu-username
+BLU_PASSWORD=your-blu-password
+
+# توکن ربات تلگرام و چت آیدی
+TELEGRAM_BOT_TOKEN=your-telegram-bot-token
+TELEGRAM_CHAT_ID=your-telegram-chat-id
+
+# کلید مخفی برای امضای HMAC
+HMAC_SECRET=your-hmac-secret-key
