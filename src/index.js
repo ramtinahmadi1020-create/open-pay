@@ -195,14 +195,6 @@ export default {
 
     if (path === '/admin/cards' && request.method === 'POST') {
       const { card_number, holder_name } = await request.json();
-
-      if (!card_number.startsWith('6104') && !card_number.startsWith('6037')) {
-        return new Response(JSON.stringify({ success: false, error: 'فقط کارت‌های بلو قابل قبول هستند.' }), {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' }
-        });
-      }
-
       try {
         await env.DB.prepare(
           'INSERT INTO cards (card_number, holder_name) VALUES (?, ?)'
