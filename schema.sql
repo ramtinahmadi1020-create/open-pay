@@ -1,0 +1,28 @@
+CREATE TABLE IF NOT EXISTS cards (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  card_number TEXT NOT NULL UNIQUE,
+  holder_name TEXT NOT NULL,
+  bank_name TEXT NOT NULL DEFAULT 'بلو',
+  is_active INTEGER NOT NULL DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS payment_gateways (
+  id TEXT PRIMARY KEY,
+  card_id INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  amount INTEGER NOT NULL,
+  expires_at DATETIME NOT NULL,
+  redirect_url TEXT,
+  status TEXT NOT NULL DEFAULT 'active',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  paid_at DATETIME,
+  FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE IF NOT EXISTS seen_transactions (
+  id TEXT PRIMARY KEY,
+  amount INTEGER NOT NULL,
+  card_last4 TEXT,
+  detected_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
